@@ -1,4 +1,4 @@
-package com.group.libraryapp.service.book;
+package com.group.libraryapp.service.book
 
 import com.group.libraryapp.domain.book.Book
 import com.group.libraryapp.domain.book.BookRepository
