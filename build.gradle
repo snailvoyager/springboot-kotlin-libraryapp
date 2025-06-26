@@ -4,6 +4,7 @@ plugins {
     id 'java'
     id 'org.jetbrains.kotlin.jvm' version '1.6.21'
     id 'org.jetbrains.kotlin.plugin.jpa' version '1.6.21' // 기본 생성자를 자동으로 추가
+    id 'org.jetbrains.kotlin.plugin.spring' version '1.6.21' // AOP 가능하도록 open 처리
 }
 
 group = 'com.group'
