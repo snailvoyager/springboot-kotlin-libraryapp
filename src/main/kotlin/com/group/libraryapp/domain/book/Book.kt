@@ -9,6 +9,8 @@ import javax.persistence.Id
 class Book (
     val name: String,
 
+    val type: String,
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: Long? = null,
@@ -16,6 +18,20 @@ class Book (
     init {
         if (name.isBlank()) {
             throw IllegalArgumentException("이름은 비어 있을 수 없습니다")
+        }
+    }
+
+    companion object {
+        fun fixture(        // Object Mother Pattern 테스트에 사용될 객체를 중앙화된 위치에서 생성하고 관리
+                name: String = "책 이름",
+                type: String = "COMPUTER",
+                id: Long? = null,
+        ): Book {
+            return Book(
+                    name = name,
+                    type = type,
+                    id = id,
+            )
         }
     }
 }
