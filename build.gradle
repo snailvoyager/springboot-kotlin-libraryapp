@@ -20,6 +20,7 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.jetbrains.kotlin:kotlin-stdlib-jdk8'
     implementation 'org.jetbrains.kotlin:kotlin-reflect:1.6.21' // Spring, Jackson 에서 Kotlin 동적으로 다루기 위한 리플렉션
+    implementation 'com.fasterxml.jackson.module:jackson-module-kotlin:2.13.3'  // null 안전성, 기본값, data class, non-nullable 타입 등을 Jackson이 제대로 직렬화/역직렬화할 수 있도록
     runtimeOnly 'com.h2database:h2'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
