@@ -1,15 +1,13 @@
 package com.group.libraryapp.domain.book
 
-import javax.persistence.Entity
-import javax.persistence.GeneratedValue
-import javax.persistence.GenerationType
-import javax.persistence.Id
+import javax.persistence.*
 
 @Entity
 class Book (
     val name: String,
 
-    val type: String,
+    @Enumerated(EnumType.STRING)    // DB에 저장될 때 Enum 속성이 문자열로 저장되도록 설정
+    val type: BookType,
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,7 +22,7 @@ class Book (
     companion object {
         fun fixture(        // Object Mother Pattern 테스트에 사용될 객체를 중앙화된 위치에서 생성하고 관리
                 name: String = "책 이름",
-                type: String = "COMPUTER",
+                type: BookType = BookType.COMPUTER,
                 id: Long? = null,
         ): Book {
             return Book(
