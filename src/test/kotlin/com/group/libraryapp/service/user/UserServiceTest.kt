@@ -2,6 +2,9 @@ package com.group.libraryapp.service.user
 
 import com.group.libraryapp.domain.user.User
 import com.group.libraryapp.domain.user.UserRepository
+import com.group.libraryapp.domain.user.loanhistory.UserLoanHistory
+import com.group.libraryapp.domain.user.loanhistory.UserLoanHistoryRepository
+import com.group.libraryapp.domain.user.loanhistory.UserLoanStatus
 import com.group.libraryapp.dto.user.request.UserCreateRequest
 import com.group.libraryapp.dto.user.request.UserUpdateRequest
 import org.assertj.core.api.Assertions.assertThat
@@ -14,7 +17,8 @@ import org.springframework.boot.test.context.SpringBootTest
 @SpringBootTest
 class UserServiceTest @Autowired constructor(
         private val userRepository: UserRepository,
-        private val userService: UserService
+        private val userService: UserService,
+        private val userLoanHistoryRepository: UserLoanHistoryRepository,
 ) {
 
     @AfterEach
@@ -78,5 +82,26 @@ class UserServiceTest @Autowired constructor(
 
         // then
         assertThat(userRepository.findAll()).isEmpty()
+    }
+
+    @Test
+    fun getUserLoanHistories() {
+        // given
+        val savedUser = userRepository.save(User("A", null))
+        userLoanHistoryRepository.saveAll(listOf(
+                UserLoanHistory.fixture(savedUser, "book1", UserLoanStatus.LOANED),
+                UserLoanHistory.fixture(savedUser, "book2", UserLoanStatus.LOANED),
+                UserLoanHistory.fixture(savedUser, "book3", UserLoanStatus.RETURNED)
+        ))
+        // when
+        val results = userService.getUserLoanHistories()
+        // then
+        assertThat(results).hasSize(1)
+        assertThat(results[0].name).isEqualTo("A")
+        assertThat(results[0].books).hasSize(3)
+        assertThat(results[0].books).extracting("name")
+                .containsExactlyInAnyOrder("book1", "book2", "book3")
+        assertThat(results[0].books).extracting("isReturn")
+                .containsExactlyInAnyOrder(false, false, true)
     }
 }
