@@ -5,6 +5,7 @@ plugins {
     id 'org.jetbrains.kotlin.jvm' version '1.6.21'
     id 'org.jetbrains.kotlin.plugin.jpa' version '1.6.21' // 기본 생성자를 자동으로 추가
     id 'org.jetbrains.kotlin.plugin.spring' version '1.6.21' // AOP 가능하도록 open 처리
+    id 'org.jetbrains.kotlin.kapt' version '1.6.21'
 }
 
 group = 'com.group'
@@ -21,6 +22,10 @@ dependencies {
     implementation 'org.jetbrains.kotlin:kotlin-stdlib-jdk8'
     implementation 'org.jetbrains.kotlin:kotlin-reflect:1.6.21' // Spring, Jackson 에서 Kotlin 동적으로 다루기 위한 리플렉션
     implementation 'com.fasterxml.jackson.module:jackson-module-kotlin:2.13.3'  // null 안전성, 기본값, data class, non-nullable 타입 등을 Jackson이 제대로 직렬화/역직렬화할 수 있도록
+    implementation 'com.querydsl:querydsl-jpa:5.1.0'
+    kapt('com.querydsl:querydsl-apt:5.1.0:jpa')
+    kapt('org.springframework.boot:spring-boot-configuration-processor')
+
     runtimeOnly 'com.h2database:h2'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
